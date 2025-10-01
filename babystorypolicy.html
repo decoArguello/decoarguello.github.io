@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Política de Privacidad — BabyTracker</title>
+  <meta name="description" content="Política de Privacidad de BabyTracker" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#f3fbff; /* muy claro */
+      --bg2:#fff6fb; /* rosado muy claro */
+      --ink:#2b2b2b;
+      --muted:#6c7583;
+      --card: rgba(255,255,255,.72);
+      --accent:#66c6c6; /* menta suave */
+      --accent-2:#ffb7cc; /* rosa pastel */
+      --radius:22px;
+      --shadow: 0 20px 50px rgba(0,0,0,.08);
+      --ring: 0 0 0 4px rgba(102,198,198,.18);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--ink); font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+      background: radial-gradient(1200px 800px at 20% -10%, var(--bg2), transparent),
+                  radial-gradient(1200px 900px at 120% 10%, #e8fff7, transparent),
+                  linear-gradient(180deg, #ffffff, var(--bg1));
+    }
+    .container{max-width:1000px; padding:24px; margin:0 auto}
+    header{
+      display:flex; align-items:center; gap:16px; margin:24px 0 12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:14px;
+      padding:10px 14px; border-radius:calc(var(--radius) - 8px);
+      background: linear-gradient(135deg, rgba(255,255,255,.8), rgba(255,255,255,.5));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+    }
+    .brand svg{width:40px; height:40px}
+    h1{font-size:clamp(26px, 3.8vw, 38px); margin:0}
+    .subtitle{color:var(--muted); margin:4px 0 0; font-size:clamp(14px,1.6vw,16px)}
+
+    nav{
+      margin:18px 0 28px; display:flex; flex-wrap:wrap; gap:10px;
+    }
+    .chip{
+      text-decoration:none; color:#174a4a; font-weight:600; background: #ffffffaa;
+      border:1px solid #e7eff1; padding:10px 14px; border-radius:999px; box-shadow: var(--shadow);
+    }
+    .chip:hover{box-shadow:0 8px 24px rgba(0,0,0,.10)}
+
+    .card{
+      background: var(--card); border:1px solid #ecf1f5; border-radius: var(--radius);
+      box-shadow: var(--shadow); padding:24px; margin:18px 0; backdrop-filter: blur(10px);
+    }
+    .section-title{
+      display:flex; align-items:center; gap:12px; margin:0 0 10px; font-size:1.2rem;
+    }
+    .section-title svg{width:22px; height:22px}
+    p{line-height:1.7; color:#3b4046}
+    ul{line-height:1.8; color:#3b4046; padding-left:18px}
+
+    .note{
+      background: linear-gradient(90deg, #fff, #fff9fc);
+      border-left:4px solid var(--accent-2); padding:12px 14px; border-radius:12px; color:#50555c;
+    }
+
+    .footer{
+      display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between; padding:18px 0 48px; color:var(--muted);
+    }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+      background:linear-gradient(135deg, #faffff, #fff); border:1px solid #ebf1f2; color:#335c5c; font-weight:600;
+    }
+
+    .cta{
+      display:inline-block; margin-top:6px; text-decoration:none; color:white; background: linear-gradient(135deg, var(--accent), #6fd5d5);
+      padding:12px 18px; border-radius:14px; box-shadow: var(--shadow);
+    }
+    .cta:hover{box-shadow:0 16px 38px rgba(102,198,198,.35)}
+
+    /* Responsive */
+    @media (max-width: 720px){
+      .container{padding:18px}
+      .card{padding:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand" aria-label="Marca BabyTracker">
+        <!-- Ícono bebé/biberón -->
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="2" width="60" height="60" rx="16" fill="#e9fbfb"/>
+          <path d="M34 14h-4c-1.1 0-2 .9-2 2v2h8v-2c0-1.1-.9-2-2-2Z" fill="#ffb7cc"/>
+          <rect x="22" y="18" width="20" height="30" rx="10" fill="#fff" stroke="#9be0e0" stroke-width="2"/>
+          <path d="M26 26h12M26 30h12M26 34h12" stroke="#9be0e0" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="44" cy="20" r="4" fill="#ffb7cc"/>
+        </svg>
+        <div>
+          <h1>Política de Privacidad</h1>
+          <p class="subtitle">BabyTracker — Cuidado y monitoreo para tu bebé</p>
+        </div>
+      </div>
+    </header>
+
+    <nav aria-label="Índice de secciones">
+      <a class="chip" href="#recopilacion">1. Información que recopilamos</a>
+      <a class="chip" href="#uso">2. Uso de la información</a>
+      <a class="chip" href="#almacenamiento">3. Almacenamiento y seguridad</a>
+      <a class="chip" href="#comparticion">4. Compartición</a>
+      <a class="chip" href="#derechos">5. Derechos del usuario</a>
+      <a class="chip" href="#cambios">6. Cambios</a>
+      <a class="chip" href="#contacto">7. Contacto</a>
+    </nav>
+
+    <section id="intro" class="card">
+      <h2 class="section-title">
+        <!-- escudo -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l7 3v5c0 5-3.4 9.4-7 10-3.6-.6-7-5-7-10V6l7-3Z" stroke="#66c6c6" stroke-width="1.8"/></svg>
+        Introducción
+      </h2>
+      <p>Esta Política de Privacidad describe cómo <strong>BabyTracker</strong> recopila, utiliza y protege la información dentro de la aplicación móvil. Fecha de entrada en vigor: <strong id="fecha">DD/MM/AAAA</strong>.</p>
+      <p class="note">Versión actual de la app: <strong>1.0.0</strong>. Si en futuras versiones habilitamos sincronización en la nube o analíticas, actualizaremos esta política y te informaremos oportunamente.</p>
+    </section>
+
+    <section id="recopilacion" class="card">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 7h12M6 12h12M6 17h8" stroke="#66c6c6" stroke-width="1.8" stroke-linecap="round"/></svg>
+        1. Información que recopilamos
+      </h2>
+      <ul>
+        <li><strong>Datos introducidos por el usuario:</strong> eventos de lactancia, sueño, pañales, crecimiento y notas opcionales.</li>
+        <li><strong>Datos técnicos mínimos:</strong> versión del sistema operativo, idioma y métricas básicas para el correcto funcionamiento de la app.</li>
+        <li><strong>No</strong> solicitamos acceso a ubicación, contactos ni fotos de forma predeterminada.</li>
+      </ul>
+    </section>
+
+    <section id="uso" class="card">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 12a8 8 0 1 0 16 0A8 8 0 0 0 4 12Z" stroke="#66c6c6" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="#ff9db7" stroke-width="1.8" stroke-linecap="round"/></svg>
+        2. Uso de la información
+      </h2>
+      <p>La información se utiliza para mostrar registros, gráficas y recordatorios dentro de la app. No vendemos ni alquilamos datos a terceros. En caso de añadir funciones en la nube o integraciones, se solicitará consentimiento y se actualizará esta política.</p>
+    </section>
+
+    <section id="almacenamiento" class="card">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z" stroke="#66c6c6" stroke-width="1.8"/><path d="M3 7l3-4h12l3 4" stroke="#ffb7cc" stroke-width="1.8"/></svg>
+        3. Almacenamiento y seguridad
+      </h2>
+      <ul>
+        <li>En la versión actual, los datos se guardan <strong>localmente en tu dispositivo</strong> (base de datos local).</li>
+        <li>Aplicamos medidas razonables para proteger contra acceso no autorizado.</li>
+        <li>Si se habilita copia en la nube, se indicará el proveedor y las salvaguardas aplicables.</li>
+      </ul>
+    </section>
+
+    <section id="comparticion" class="card">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM20 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke="#66c6c6" stroke-width="1.8"/><path d="M9.7 9.9l4.6 2.2M14.3 15.9l-4.6 2.2" stroke="#ff9db7" stroke-width="1.6"/></svg>
+        4. Compartición de información
+      </h2>
+      <p>No compartimos datos con terceros sin tu consentimiento. Cualquier integración futura (por ejemplo, para respaldos) será opcional y documentada.</p>
+    </section>
+
+    <section id="derechos" class="card">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 6v12M6 12h12" stroke="#66c6c6" stroke-width="1.8" stroke-linecap="round"/></svg>
+        5. Derechos del usuario
+      </h2>
+      <ul>
+        <li>Puedes eliminar tus datos desinstalando la app (versión local-only).</li>
+        <li>En futuras versiones con nube, añadiremos opciones para exportar o borrar tu información a solicitud.</li>
+      </ul>
+    </section>
+
+    <section id="cambios" class="card">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 12a8 8 0 1 0 16 0A8 8 0 0 0 4 12Z" stroke="#66c6c6" stroke-width="1.8"/><path d="M8 12h8" stroke="#ff9db7" stroke-width="1.8"/></svg>
+        6. Cambios en esta política
+      </h2>
+      <p>Podemos actualizar esta política para reflejar cambios en la app o en los requisitos legales. Publicaremos la fecha de actualización al inicio del documento.</p>
+    </section>
+
+    <section id="contacto" class="card">
+      <h2 class="section-title">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0 5-9 11-9 11s-9-6-9-11a9 9 0 1 1 18 0Z" stroke="#66c6c6" stroke-width="1.8"/><circle cx="12" cy="10" r="3" stroke="#ffb7cc" stroke-width="1.6"/></svg>
+        7. Contacto
+      </h2>
+      <p>Si tienes preguntas o solicitudes sobre esta Política de Privacidad, escríbenos a: <a class="badge" href="mailto:soporte@tudominio.com">soporte@tudominio.com</a></p>
+      <a class="cta" href="#intro">Volver arriba</a>
+    </section>
+
+    <div class="footer">
+      <span>© <span id="year"></span> BabyTracker</span>
+      <span class="badge">Versión de la política: 1.0</span>
+    </div>
+  </div>
+
+  <script>
+    // Rellenar fecha actual automáticamente (puedes reemplazar por una fija si prefieres)
+    const d = new Date();
+    document.getElementById('year').textContent = d.getFullYear();
+    const pad = n => String(n).padStart(2,'0');
+    document.getElementById('fecha').textContent = `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
+  </script>
+</body>
+</html>
