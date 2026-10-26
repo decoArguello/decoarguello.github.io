@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Expertise from '../components/Expertise.astro';
+import Projects from '../components/Projects.astro';
+import Stack from '../components/Stack.astro';
+import Philosophy from '../components/Philosophy.astro';
+import Blog from '../components/Blog.astro';
+import Contact from '../components/Contact.astro';
+import { siteStructuredData } from '../lib/structured-data';
+
+const site = Astro.site ?? new URL(Astro.url.origin);
+---
+
+<BaseLayout isHome jsonLd={siteStructuredData(site)}>
+  <Hero />
+  <About />
+  <Expertise />
+  <Projects />
+  <Stack />
+  <Philosophy />
+  <Blog />
+  <Contact />
+</BaseLayout>

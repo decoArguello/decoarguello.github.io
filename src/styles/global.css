@@ -1,0 +1,342 @@
+/* ==========================================================================
+   Design tokens
+   Paleta PointZeroBit con variantes accesibles (contraste verificado sobre blanco):
+   --electric (#5278FF, 3.8:1) solo para texto grande, bordes y focus;
+   --electric-ink (#3D5EF0, 5.2:1) para enlaces y texto pequeño;
+   --mint (#7EE7CB) decorativo o como fondo bajo --midnight (12:1);
+   --mint-ink (#0E7C66, 5.1:1) para etiquetas pequeñas.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  --midnight: #101827;
+  --mint: #7ee7cb;
+  --mint-soft: #e6faf4;
+  --mint-ink: #0e7c66;
+  --cloud: #e8eef3;
+  --cloud-strong: #d3dce5;
+  --electric: #5278ff;
+  --electric-ink: #3d5ef0;
+  --electric-soft: #eef2ff;
+  --white: #ffffff;
+  --paper: #f7f9fb;
+
+  --text: var(--midnight);
+  --text-muted: #475467;
+  --text-subtle: #5b6575;
+  --surface: var(--white);
+  --border: var(--cloud);
+  --border-strong: var(--cloud-strong);
+
+  --font-display: 'Bricolage Grotesque Variable', 'Inter Variable', system-ui, sans-serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --step-1: clamp(1.125rem, 1.07rem + 0.3vw, 1.3125rem);
+  --step-2: clamp(1.375rem, 1.25rem + 0.6vw, 1.75rem);
+  --step-3: clamp(1.75rem, 1.5rem + 1.25vw, 2.625rem);
+  --step-4: clamp(2.25rem, 1.75rem + 2.6vw, 4.25rem);
+
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --container: 75rem;
+  --section-space: clamp(5rem, 11vw, 9rem);
+
+  --radius-sm: 0.5rem;
+  --radius: 0.875rem;
+  --radius-lg: 1.375rem;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --header-height: 4.25rem;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-height) + 1rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--electric-ink);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--electric);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--mint);
+  color: var(--midnight);
+}
+
+/* ==========================================================================
+   Utilidades y layout
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-space);
+}
+
+.section + .section {
+  border-top: 1px solid var(--border);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--midnight);
+  color: var(--white);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* Etiqueta pequeña sobre títulos de sección: "01 — Sobre mí" */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 0 3px var(--mint-soft);
+}
+
+/* ==========================================================================
+   Botones
+   ========================================================================== */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.875rem;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    color 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+
+.button svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  transition: transform 0.2s var(--ease);
+}
+
+.button--primary {
+  background: var(--midnight);
+  color: var(--white);
+}
+
+.button--primary:hover {
+  background: #1e2a3f;
+}
+
+.button--primary:hover svg {
+  transform: translateX(3px);
+}
+
+.button--ghost {
+  border-color: var(--border-strong);
+  background: var(--white);
+  color: var(--midnight);
+}
+
+.button--ghost:hover {
+  border-color: var(--midnight);
+}
+
+/* Enlace con flecha usado en tarjetas y listados */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--electric-ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.arrow-link svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.2s var(--ease);
+}
+
+.arrow-link:hover {
+  text-decoration: underline;
+}
+
+.arrow-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* Etiqueta de tecnología / categoría */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3125rem 0.6875rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--text-muted);
+  font-size: var(--step--1);
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+/* Indicador de contenido pendiente de validación */
+.draft-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  background: var(--paper);
+  border: 1px dashed var(--border-strong);
+  color: var(--text-subtle);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   Animaciones
+   Solo se ocultan elementos cuando JS está activo (clase .js en <html>) y el
+   usuario no pidió reducir movimiento: sin JS el contenido siempre es visible.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s var(--ease),
+      transform 0.7s var(--ease);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+
+  .js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

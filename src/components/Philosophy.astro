@@ -1,0 +1,108 @@
+---
+import { principles } from '../data/principles';
+---
+
+<section class="section philosophy" id="filosofia" aria-labelledby="filosofia-title">
+  <div class="container philosophy__grid">
+    <header class="philosophy__intro" data-reveal>
+      <p class="eyebrow">05 — Filosofía</p>
+      <h2 id="filosofia-title">Cómo abordo la construcción de software</h2>
+      <p>
+        Cuatro principios que guían mis decisiones técnicas, desde la primera conversación sobre un problema hasta el
+        sistema en producción.
+      </p>
+    </header>
+
+    <ol class="principles">
+      {
+        principles.map((principle, i) => (
+          <li class="principle" data-reveal>
+            <span class="principle__number" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div>
+              <h3>{principle.title}</h3>
+              <p>{principle.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .philosophy__grid {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .philosophy__intro {
+    display: grid;
+    gap: 1.125rem;
+    align-content: start;
+    max-width: 30rem;
+  }
+
+  .philosophy__intro h2 {
+    font-size: var(--step-4);
+  }
+
+  .philosophy__intro p:last-child {
+    color: var(--text-muted);
+    font-size: var(--step-1);
+    line-height: 1.6;
+  }
+
+  .principles {
+    list-style: none;
+  }
+
+  .principle {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem clamp(1.25rem, 3vw, 2.5rem);
+    padding-block: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .principle:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .principle__number {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--border-strong);
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s var(--ease);
+  }
+
+  .principle:hover .principle__number {
+    color: var(--mint);
+  }
+
+  .principle h3 {
+    margin-bottom: 0.625rem;
+    font-size: var(--step-2);
+  }
+
+  .principle p {
+    color: var(--text-muted);
+    max-width: 34rem;
+  }
+
+  @media (min-width: 64rem) {
+    .philosophy__grid {
+      grid-template-columns: 1fr 1.4fr;
+    }
+
+    .philosophy__intro {
+      position: sticky;
+      top: calc(var(--header-height) + 2.5rem);
+    }
+  }
+</style>

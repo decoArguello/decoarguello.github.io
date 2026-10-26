@@ -1,0 +1,219 @@
+---
+import Icon from './Icon.astro';
+import ProjectVisual from './ProjectVisual.astro';
+import type { Project } from '../types';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const detailUrl = `/proyectos/${project.slug}/`;
+const titleId = `project-${project.slug}`;
+---
+
+<article class="card" aria-labelledby={titleId} data-reveal style={`--reveal-delay: ${(index % 2) * 0.08}s`}>
+  <div class="card__visual">
+    <ProjectVisual motif={project.visual} />
+  </div>
+
+  <div class="card__body">
+    <div class="card__meta">
+      <span class="card__category">{project.category}</span>
+      {project.status === 'draft' && <span class="draft-badge">En validación</span>}
+    </div>
+
+    <h3 id={titleId}>
+      <a class="card__link" href={detailUrl}>{project.name}</a>
+    </h3>
+    <p class="card__summary">{project.summary}</p>
+
+    <dl class="card__details">
+      <div>
+        <dt>Problema</dt>
+        <dd>{project.problem}</dd>
+      </div>
+      <div>
+        <dt>Solución</dt>
+        <dd>{project.solution}</dd>
+      </div>
+    </dl>
+
+    {
+      project.stack.length > 0 && (
+        <ul class="card__stack" aria-label="Stack">
+          {project.stack.map((tech) => (
+            <li class="tag">{tech}</li>
+          ))}
+        </ul>
+      )
+    }
+
+    <div class="card__actions">
+      <span class="arrow-link" aria-hidden="true">
+        Ver caso
+        <Icon name="arrow-right" />
+      </span>
+      {
+        project.links.repository && (
+          <a class="card__external" href={project.links.repository} rel="noopener" target="_blank">
+            Código<span class="visually-hidden"> de {project.name} (abre en una pestaña nueva)</span>
+          </a>
+        )
+      }
+      {
+        project.links.demo && (
+          <a class="card__external" href={project.links.demo} rel="noopener" target="_blank">
+            Demo<span class="visually-hidden"> de {project.name} (abre en una pestaña nueva)</span>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    overflow: hidden;
+    transition:
+      border-color 0.25s var(--ease),
+      box-shadow 0.25s var(--ease),
+      transform 0.25s var(--ease);
+  }
+
+  .card:hover,
+  .card:focus-within {
+    border-color: var(--border-strong);
+    box-shadow: 0 1px 2px rgb(16 24 39 / 0.04), 0 18px 40px -22px rgb(16 24 39 / 0.22);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .card:hover {
+      transform: translateY(-3px);
+    }
+  }
+
+  .card__visual {
+    border-bottom: 1px solid var(--border);
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .card__visual :global(svg) {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s var(--ease);
+  }
+
+  .card:hover .card__visual :global(svg) {
+    transform: scale(1.03);
+  }
+
+  .card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+  }
+
+  .card__category {
+    color: var(--mint-ink);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-size: var(--step-3);
+  }
+
+  .card__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Toda la tarjeta es clicable a través del enlace del título. */
+  .card__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .card__link:focus-visible {
+    outline: none;
+  }
+
+  .card:has(.card__link:focus-visible) {
+    outline: 2px solid var(--electric);
+    outline-offset: 3px;
+  }
+
+  .card__summary {
+    color: var(--midnight);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  .card__details {
+    display: grid;
+    gap: 0.875rem;
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.9375rem;
+  }
+
+  .card__details dt {
+    margin-bottom: 0.125rem;
+    color: var(--midnight);
+    font-weight: 600;
+  }
+
+  .card__details dd {
+    margin: 0;
+    color: var(--text-muted);
+  }
+
+  .card__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+  }
+
+  .card__external {
+    position: relative;
+    z-index: 2;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .card__external:hover {
+    color: var(--midnight);
+  }
+</style>

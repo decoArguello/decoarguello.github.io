@@ -1,0 +1,151 @@
+---
+import Icon from './Icon.astro';
+import { brand } from '../data/profile';
+
+/** Temas del blog. No se listan artículos concretos para no inventar publicaciones. */
+const topics = [
+  'Arquitectura de software',
+  'Inteligencia artificial',
+  'Ingeniería de datos',
+  'Desarrollo de productos',
+  'Automatización',
+];
+---
+
+<section class="section" id="blog" aria-labelledby="blog-title">
+  <div class="container">
+    <div class="blog" data-reveal>
+      <div class="blog__content">
+        <p class="eyebrow">06 — Blog</p>
+        <h2 id="blog-title">
+          Escribo en <span class="blog__brand">{brand.name}</span>
+        </h2>
+        <p class="blog__lead">
+          Notas y artículos sobre lo que aprendo diseñando y construyendo software: decisiones de arquitectura,
+          experimentos con IA y lecciones de producto.
+        </p>
+        <a class="button button--primary" href={brand.url} rel="noopener" target="_blank">
+          Leer el blog
+          <Icon name="arrow-up-right" />
+          <span class="visually-hidden">(abre en una pestaña nueva)</span>
+        </a>
+      </div>
+
+      <div class="blog__topics">
+        <p class="blog__topics-title">Temas</p>
+        <ul>
+          {
+            topics.map((topic, i) => (
+              <li>
+                <span aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                {topic}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .blog {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    padding: clamp(1.75rem, 5vw, 4rem);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgb(126 231 203 / 0.45), transparent 55%),
+      var(--mint-soft);
+  }
+
+  .blog__content {
+    display: grid;
+    gap: 1.25rem;
+    align-content: start;
+    justify-items: start;
+  }
+
+  .blog__content .eyebrow::before {
+    background: var(--midnight);
+    box-shadow: none;
+  }
+
+  .blog__content .eyebrow {
+    color: var(--text-muted);
+  }
+
+  h2 {
+    font-size: var(--step-4);
+  }
+
+  .blog__brand {
+    display: inline-block;
+    position: relative;
+  }
+
+  .blog__brand::after {
+    content: '';
+    position: absolute;
+    right: -0.18em;
+    bottom: 0.14em;
+    width: 0.16em;
+    height: 0.16em;
+    border-radius: 50%;
+    background: var(--electric);
+  }
+
+  .blog__lead {
+    max-width: 32rem;
+    color: var(--text-muted);
+    font-size: var(--step-1);
+    line-height: 1.6;
+  }
+
+  .blog__content .button {
+    margin-top: 0.5rem;
+  }
+
+  .blog__topics-title {
+    margin-bottom: 0.75rem;
+    color: var(--text-muted);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .blog__topics ul {
+    list-style: none;
+    border-top: 1px solid rgb(16 24 39 / 0.14);
+  }
+
+  .blog__topics li {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid rgb(16 24 39 / 0.14);
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .blog__topics li span {
+    color: var(--mint-ink);
+    font-family: var(--font-body);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (min-width: 64rem) {
+    .blog {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+  }
+</style>

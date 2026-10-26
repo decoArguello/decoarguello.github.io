@@ -1,0 +1,20 @@
+---
+/**
+ * Marca personal: un "cero" con un bit desplazado (guiño a PointZeroBit).
+ * Mismo dibujo que `public/favicon.svg`.
+ */
+interface Props {
+  size?: number;
+  /** `dark`: para fondos oscuros (footer), donde el cuadro Midnight no se distinguiría. */
+  tone?: 'light' | 'dark';
+  class?: string;
+}
+
+const { size = 28, tone = 'light', class: className } = Astro.props;
+---
+
+<svg class={className} width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+  <rect width="32" height="32" rx="9" fill={tone === 'dark' ? '#25324A' : '#101827'}></rect>
+  <circle cx="14" cy="16" r="6.5" fill="none" stroke="#fff" stroke-width="2.5"></circle>
+  <circle cx="23.5" cy="22.5" r="3" fill="#7EE7CB"></circle>
+</svg>

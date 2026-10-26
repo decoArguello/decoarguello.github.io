@@ -1,0 +1,118 @@
+---
+import '@fontsource-variable/inter/wght.css';
+import '@fontsource-variable/bricolage-grotesque/wght.css';
+import '../styles/global.css';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import bricolageLatin from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2?url';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { profile } from '../data/profile';
+
+interface Props {
+  /** Título de la página; se le añade el nombre del sitio. Si se omite, se usa el título principal. */
+  title?: string;
+  description?: string;
+  /** Ruta de una imagen en `public/` para Open Graph. */
+  image?: string;
+  /** Evita la indexación (borradores, 404). */
+  noindex?: boolean;
+  /** Bloques JSON-LD adicionales. */
+  jsonLd?: Record<string, unknown>[];
+  /** En la portada los enlaces del menú son anclas locales. */
+  isHome?: boolean;
+}
+
+const defaultTitle = `${profile.name} — ${profile.role}`;
+const defaultDescription =
+  'Portafolio de ingeniería de software: arquitectura de sistemas, backend y APIs, inteligencia artificial aplicada, ingeniería de datos y plataformas cloud.';
+
+const {
+  title,
+  description = defaultDescription,
+  image = '/og-image.png',
+  noindex = false,
+  jsonLd = [],
+  isHome = false,
+} = Astro.props;
+
+const pageTitle = title ? `${title} · ${profile.name}` : defaultTitle;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={profile.name} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bricolageLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${profile.name} — ${profile.role}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {jsonLd.map((block) => <script is:inline type="application/ld+json" set:html={JSON.stringify(block)} />)}
+
+    <!-- Activa las animaciones de entrada solo cuando hay JS (sin JS, todo es visible). -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <Header isHome={isHome} />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <Footer isHome={isHome} />
+
+    <script>
+      // Revela elementos marcados con [data-reveal] al entrar en pantalla.
+      const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        targets.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        );
+        targets.forEach((el) => observer.observe(el));
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  main:focus {
+    outline: none;
+  }
+</style>

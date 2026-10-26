@@ -1,0 +1,188 @@
+---
+import Icon from './Icon.astro';
+import type { IconName } from './Icon.astro';
+import { brand, profile } from '../data/profile';
+
+interface Channel {
+  label: string;
+  value: string;
+  url: string;
+  icon: IconName;
+  external: boolean;
+}
+
+/** Solo se muestran canales configurados en `src/data/profile.ts`. */
+const channels: Channel[] = [
+  ...(profile.email
+    ? [{ label: 'Email', value: profile.email, url: `mailto:${profile.email}`, icon: 'mail' as const, external: false }]
+    : []),
+  ...(profile.links.linkedin
+    ? [
+        {
+          label: 'LinkedIn',
+          value: profile.links.linkedin.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, ''),
+          url: profile.links.linkedin,
+          icon: 'linkedin' as const,
+          external: true,
+        },
+      ]
+    : []),
+  {
+    label: 'GitHub',
+    value: profile.links.github.replace(/^https?:\/\//, ''),
+    url: profile.links.github,
+    icon: 'github',
+    external: true,
+  },
+  {
+    label: 'Blog',
+    value: brand.url.replace(/^https?:\/\//, '').replace(/\/$/, ''),
+    url: brand.url,
+    icon: 'pen',
+    external: true,
+  },
+];
+---
+
+<section class="section contact" id="contacto" aria-labelledby="contacto-title">
+  <div class="container contact__grid">
+    <header class="contact__intro" data-reveal>
+      <p class="eyebrow">07 — Contacto</p>
+      <h2 id="contacto-title">¿Tienes un problema complejo entre manos? Hablemos.</h2>
+      <p>
+        Arquitectura de un nuevo producto, integración de IA en un proceso existente o una plataforma de datos que tiene
+        que escalar: cuéntame en qué estás trabajando.
+      </p>
+    </header>
+
+    <ul class="channels" data-reveal style="--reveal-delay: 0.1s">
+      {
+        channels.map((channel) => (
+          <li>
+            <a
+              class="channel"
+              href={channel.url}
+              {...(channel.external ? { rel: 'noopener', target: '_blank' } : {})}
+            >
+              <span class="channel__icon">
+                <Icon name={channel.icon} />
+              </span>
+              <span class="channel__text">
+                <span class="channel__label">{channel.label}</span>
+                <span class="channel__value">{channel.value}</span>
+              </span>
+              <Icon name="arrow-up-right" class="channel__arrow" />
+              {channel.external && <span class="visually-hidden">(abre en una pestaña nueva)</span>}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .contact__grid {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .contact__intro {
+    display: grid;
+    gap: 1.25rem;
+    align-content: start;
+  }
+
+  h2 {
+    font-size: var(--step-4);
+    max-width: 18ch;
+  }
+
+  .contact__intro p:last-child {
+    max-width: 32rem;
+    color: var(--text-muted);
+    font-size: var(--step-1);
+    line-height: 1.6;
+  }
+
+  .channels {
+    list-style: none;
+    border-top: 1px solid var(--border);
+    align-self: end;
+  }
+
+  .channel {
+    display: flex;
+    align-items: center;
+    gap: 1.125rem;
+    padding: 1.375rem 0.25rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--midnight);
+    text-decoration: none;
+    transition: padding 0.25s var(--ease), background-color 0.25s var(--ease);
+  }
+
+  .channel__icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    background: var(--paper);
+    transition: background-color 0.25s var(--ease);
+  }
+
+  .channel__icon :global(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .channel__text {
+    display: grid;
+    min-width: 0;
+  }
+
+  .channel__label {
+    color: var(--text-subtle);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .channel__value {
+    overflow: hidden;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .channel :global(.channel__arrow) {
+    width: 1.375rem;
+    height: 1.375rem;
+    flex-shrink: 0;
+    margin-left: auto;
+    color: var(--text-subtle);
+    transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+  }
+
+  .channel:hover .channel__icon {
+    background: var(--mint);
+  }
+
+  .channel:hover :global(.channel__arrow) {
+    color: var(--electric-ink);
+    transform: translate(3px, -3px);
+  }
+
+  @media (min-width: 64rem) {
+    .contact__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

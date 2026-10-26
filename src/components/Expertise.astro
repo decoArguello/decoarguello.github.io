@@ -1,0 +1,158 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { expertise, experience } from '../data/expertise';
+---
+
+<section class="section" id="experiencia" aria-labelledby="experiencia-title">
+  <div class="container">
+    <SectionHeading
+      index="02"
+      eyebrow="Experiencia"
+      title="Competencias que aplico de punta a punta"
+      intro="Cuatro áreas que se refuerzan entre sí: ningún sistema real vive solo en el backend, en los datos o en la nube."
+      id="experiencia-title"
+    />
+
+    <ol class="expertise">
+      {
+        expertise.map((group, i) => (
+          <li class="expertise__group" data-reveal style={`--reveal-delay: ${(i % 2) * 0.08}s`}>
+            <span class="expertise__index" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3>{group.title}</h3>
+            <p class="expertise__description">{group.description}</p>
+            <ul class="expertise__items">
+              {group.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+
+    {
+      experience.length > 0 && (
+        <div class="timeline">
+          <h3 class="timeline__title">Trayectoria</h3>
+          <ol>
+            {experience.map((entry) => (
+              <li class="timeline__entry" data-reveal>
+                <p class="timeline__period">{entry.period}</p>
+                <div>
+                  <h4>{entry.role}</h4>
+                  <p class="timeline__org">{entry.organization}</p>
+                  <p>{entry.description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .expertise {
+    display: grid;
+    list-style: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .expertise__group {
+    display: grid;
+    gap: 0.875rem;
+    align-content: start;
+    padding-block: 2rem 2.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .expertise__index {
+    color: var(--mint-ink);
+    font-size: var(--step--1);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  h3 {
+    font-size: var(--step-2);
+  }
+
+  .expertise__description {
+    color: var(--text-muted);
+    max-width: 30rem;
+  }
+
+  .expertise__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    list-style: none;
+  }
+
+  .expertise__items li {
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+    color: var(--midnight);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .timeline {
+    margin-top: clamp(3rem, 7vw, 5rem);
+  }
+
+  .timeline__title {
+    margin-bottom: 1.5rem;
+  }
+
+  .timeline ol {
+    list-style: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .timeline__entry {
+    display: grid;
+    gap: 0.5rem 2rem;
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+  }
+
+  .timeline__period {
+    color: var(--text-subtle);
+    font-size: var(--step--1);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timeline h4 {
+    color: var(--midnight);
+    font-size: var(--step-1);
+  }
+
+  .timeline__org {
+    margin-bottom: 0.5rem;
+    color: var(--midnight);
+    font-weight: 500;
+  }
+
+  @media (min-width: 48rem) {
+    .expertise {
+      grid-template-columns: 1fr 1fr;
+      column-gap: clamp(2rem, 5vw, 4.5rem);
+    }
+
+    .expertise__group {
+      padding-block: 2.5rem 2.75rem;
+    }
+
+    .timeline__entry {
+      grid-template-columns: 12rem 1fr;
+    }
+  }
+</style>

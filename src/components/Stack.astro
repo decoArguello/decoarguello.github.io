@@ -1,0 +1,101 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { stack } from '../data/stack';
+---
+
+<section class="section" id="tecnologias" aria-labelledby="tecnologias-title">
+  <div class="container">
+    <SectionHeading
+      index="04"
+      eyebrow="Tecnologías"
+      title="Herramientas que elijo con criterio"
+      intro="Un stack amplio no es un fin en sí mismo: cada tecnología está aquí porque resuelve bien un tipo de problema."
+      id="tecnologias-title"
+    />
+
+    <div class="stack">
+      {
+        stack.map((group) => (
+          <div class="stack__row" data-reveal>
+            <div class="stack__label">
+              <h3>{group.title}</h3>
+              <p>{group.description}</p>
+            </div>
+            <ul class="stack__items">
+              {group.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack {
+    border-top: 1px solid var(--border);
+  }
+
+  .stack__row {
+    display: grid;
+    gap: 1rem 2rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stack__label h3 {
+    font-size: var(--step-1);
+    letter-spacing: -0.015em;
+  }
+
+  .stack__label p {
+    margin-top: 0.25rem;
+    color: var(--text-subtle);
+    font-size: 0.9375rem;
+  }
+
+  .stack__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    list-style: none;
+    align-content: start;
+  }
+
+  .stack__items li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 1rem 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--midnight);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+  }
+
+  .stack__items li::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--mint);
+  }
+
+  .stack__items li:hover {
+    border-color: var(--border-strong);
+    background: var(--paper);
+  }
+
+  @media (min-width: 48rem) {
+    .stack__row {
+      grid-template-columns: minmax(12rem, 1fr) 2.2fr;
+      padding-block: 2.25rem;
+    }
+  }
+</style>

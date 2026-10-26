@@ -1,0 +1,60 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import SectionHeading from './SectionHeading.astro';
+import { projects } from '../data/projects';
+
+const hasDrafts = projects.some((project) => project.status === 'draft');
+---
+
+<section class="section projects" id="proyectos" aria-labelledby="proyectos-title">
+  <div class="container">
+    <SectionHeading
+      index="03"
+      eyebrow="Proyectos"
+      title="Productos y sistemas en los que trabajo"
+      intro="Plataformas, productos SaaS y herramientas donde aplico arquitectura, datos e inteligencia artificial a problemas concretos."
+      id="proyectos-title"
+    />
+
+    <div class="projects__grid">
+      {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+    </div>
+
+    {
+      hasDrafts && (
+        <p class="projects__note">
+          Los proyectos marcados como <span class="draft-badge">En validación</span> tienen su descripción en revisión;
+          el detalle técnico completo se publicará cuando esté confirmado.
+        </p>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .projects {
+    background: var(--paper);
+  }
+
+  .projects__grid {
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .projects__note {
+    margin-top: 2.5rem;
+    color: var(--text-subtle);
+    font-size: 0.9375rem;
+  }
+
+  .projects__note .draft-badge {
+    background: var(--white);
+    vertical-align: 0.0625rem;
+  }
+
+  @media (min-width: 48rem) {
+    .projects__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

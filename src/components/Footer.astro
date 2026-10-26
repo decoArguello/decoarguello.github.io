@@ -1,0 +1,156 @@
+---
+import LogoMark from './LogoMark.astro';
+import { brand, navigation, profile } from '../data/profile';
+
+interface Props {
+  isHome?: boolean;
+}
+
+const { isHome = false } = Astro.props;
+const href = (id: string) => (isHome ? `#${id}` : `/#${id}`);
+
+const social = [
+  { label: 'GitHub', url: profile.links.github },
+  { label: 'LinkedIn', url: profile.links.linkedin },
+  { label: brand.name, url: brand.url },
+].filter((link): link is { label: string; url: string } => link.url !== null);
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__top">
+      <div class="site-footer__identity">
+        <a class="site-footer__brand" href={isHome ? '#inicio' : '/'}>
+          <LogoMark size={32} tone="dark" />
+          <span>{profile.name}</span>
+        </a>
+        <p>{profile.role}. Arquitectura, IA aplicada y datos para construir productos que funcionan.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Secundaria">
+        <p class="site-footer__title">Secciones</p>
+        <ul>
+          {
+            navigation.map((item) => (
+              <li>
+                <a href={href(item.id)}>{item.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="site-footer__nav">
+        <p class="site-footer__title">En la red</p>
+        <ul>
+          {
+            social.map((link) => (
+              <li>
+                <a href={link.url} rel="noopener" target="_blank">
+                  {link.label}
+                  <span class="visually-hidden"> (abre en una pestaña nueva)</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>
+        © <span data-year>{new Date().getFullYear()}</span>{' '}{profile.name}. Todos los derechos reservados.
+      </p>
+      <p>
+        Escribo en <a href={brand.url} rel="noopener" target="_blank">{brand.name}</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // El año se fija en el build; se actualiza en el cliente por si el sitio no se reconstruye.
+  document.querySelectorAll('[data-year]').forEach((el) => {
+    el.textContent = String(new Date().getFullYear());
+  });
+</script>
+
+<style>
+  .site-footer {
+    padding-block: clamp(3.5rem, 8vw, 5.5rem) 2rem;
+    background: var(--midnight);
+    color: #b9c6d3;
+    font-size: 0.9375rem;
+  }
+
+  .site-footer a {
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .site-footer a:hover {
+    color: var(--mint);
+  }
+
+  .site-footer :focus-visible {
+    outline-color: var(--mint);
+  }
+
+  .site-footer__top {
+    display: grid;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  }
+
+  .site-footer__identity {
+    display: grid;
+    align-content: start;
+    gap: 1rem;
+    max-width: 22rem;
+  }
+
+  .site-footer__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .site-footer__title {
+    margin-bottom: 1rem;
+    color: var(--mint);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .site-footer__nav ul {
+    display: grid;
+    gap: 0.625rem;
+    list-style: none;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem 2rem;
+    padding-top: 1.75rem;
+    font-size: 0.875rem;
+  }
+
+  .site-footer__bottom a {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (min-width: 48rem) {
+    .site-footer__top {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+</style>
