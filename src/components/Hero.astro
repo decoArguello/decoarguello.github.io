@@ -1,0 +1,213 @@
+---
+import HeroVisual from './HeroVisual.astro';
+import Icon from './Icon.astro';
+import { profile } from '../data/profile';
+---
+
+<section class="hero" id="inicio" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__content">
+      <div class="hero__meta">
+        <p class="hero__name">{profile.name} <span>· {profile.role}</span></p>
+        {
+          profile.availability.enabled && (
+            <p class="hero__availability">
+              <span class="hero__availability-dot" aria-hidden="true" />
+              {profile.availability.label}
+            </p>
+          )
+        }
+      </div>
+
+      <h1 id="hero-title">{profile.headline}</h1>
+      <p class="hero__lead">{profile.subheadline}</p>
+
+      <div class="hero__actions">
+        <a class="button button--primary" href="#proyectos">
+          Ver proyectos
+          <Icon name="arrow-right" />
+        </a>
+        <a class="button button--ghost" href="#contacto">Contacto</a>
+      </div>
+
+      <ul class="hero__social" aria-label="Perfiles">
+        <li>
+          <a href={profile.links.github} rel="noopener" target="_blank">
+            <Icon name="github" />
+            GitHub<span class="visually-hidden"> (abre en una pestaña nueva)</span>
+          </a>
+        </li>
+        {
+          profile.links.linkedin && (
+            <li>
+              <a href={profile.links.linkedin} rel="noopener" target="_blank">
+                <Icon name="linkedin" />
+                LinkedIn<span class="visually-hidden"> (abre en una pestaña nueva)</span>
+              </a>
+            </li>
+          )
+        }
+      </ul>
+    </div>
+
+    <div class="hero__visual">
+      <HeroVisual />
+    </div>
+  </div>
+
+  <div class="container">
+    <ul class="hero__specialties" aria-label="Especialidades">
+      {profile.specialties.map((specialty) => <li>{specialty}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(3rem, 8vw, 6.5rem) clamp(3.5rem, 7vw, 5.5rem);
+    overflow: hidden;
+  }
+
+  .hero__grid {
+    display: grid;
+    gap: clamp(3rem, 6vw, 4.5rem);
+    align-items: center;
+  }
+
+  .hero__content {
+    display: grid;
+    gap: 1.75rem;
+    animation: rise 0.9s var(--ease) both;
+  }
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+  }
+
+  .hero__name {
+    font-weight: 600;
+    color: var(--midnight);
+  }
+
+  .hero__name span {
+    color: var(--text-subtle);
+    font-weight: 500;
+  }
+
+  .hero__availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3125rem 0.75rem;
+    border-radius: 999px;
+    background: var(--mint-soft);
+    color: var(--mint-ink);
+    font-size: var(--step--1);
+    font-weight: 600;
+  }
+
+  .hero__availability-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--mint-ink);
+  }
+
+  h1 {
+    font-size: clamp(2.375rem, 1.6rem + 3.6vw, 4.5rem);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    max-width: 16ch;
+  }
+
+  .hero__lead {
+    max-width: 36rem;
+    color: var(--text-muted);
+    font-size: var(--step-1);
+    line-height: 1.6;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .hero__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .hero__social a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .hero__social a:hover {
+    color: var(--midnight);
+  }
+
+  .hero__social :global(svg) {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .hero__visual {
+    animation: rise 0.9s 0.15s var(--ease) both;
+  }
+
+  .hero__specialties {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.75rem;
+    margin-top: clamp(3.5rem, 7vw, 5.5rem);
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--border);
+    list-style: none;
+    color: var(--text-muted);
+    font-size: 0.9375rem;
+    font-weight: 500;
+  }
+
+  .hero__specialties li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .hero__specialties li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--mint);
+  }
+
+  @media (min-width: 64rem) {
+    .hero__grid {
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,124 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { brand, profile } from '../data/profile';
+
+const facts = [
+  { term: 'Formación', value: 'Ingeniería de Sistemas' },
+  { term: 'Posgrado', value: 'Máster en Visual Analytics y Big Data' },
+  { term: 'Enfoque', value: 'Full stack, arquitectura de software e IA aplicada' },
+  ...(profile.location ? [{ term: 'Ubicación', value: profile.location }] : []),
+];
+---
+
+<section class="section" id="sobre-mi" aria-labelledby="sobre-mi-title">
+  <div class="container">
+    <SectionHeading index="01" eyebrow="Sobre mí" title="Entre el código, la arquitectura y los datos" id="sobre-mi-title" />
+
+    <div class="about">
+      <p class="about__statement" data-reveal>
+        Me interesa el momento en que una idea todavía difusa se convierte en un sistema que <em>funciona</em>:
+        claro por dentro, útil por fuera y preparado para crecer.
+      </p>
+
+      <div class="about__body" data-reveal style="--reveal-delay: 0.1s">
+        <p>
+          Soy ingeniero de sistemas y desarrollo software de punta a punta: del modelo de datos y las APIs a la interfaz
+          que usa una persona. Esa visión completa es la que me permite tomar buenas decisiones de arquitectura, porque
+          conozco el coste de cada una en todas las capas.
+        </p>
+        <p>
+          Mi máster en Visual Analytics y Big Data hizo que los datos pasaran a ser parte central de cómo diseño
+          soluciones. Hoy eso se extiende a la inteligencia artificial: automatizar procesos, integrar modelos de lenguaje
+          y construir agentes que resuelvan tareas concretas, con la misma exigencia de calidad que cualquier otro
+          componente del sistema.
+        </p>
+        <p>
+          Combino la construcción de productos de software con la escritura en <a
+            href={brand.url}
+            rel="noopener"
+            target="_blank">{brand.name}</a
+          >, donde comparto lo que aprendo por el camino.
+        </p>
+
+        <dl class="about__facts">
+          {
+            facts.map((fact) => (
+              <div>
+                <dt>{fact.term}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .about__statement {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    max-width: 22ch;
+  }
+
+  .about__statement em {
+    font-style: normal;
+    background: linear-gradient(transparent 62%, var(--mint) 62%, var(--mint) 90%, transparent 90%);
+  }
+
+  .about__body {
+    display: grid;
+    gap: 1.25rem;
+    color: var(--text-muted);
+    max-width: 40rem;
+  }
+
+  .about__facts {
+    display: grid;
+    margin: 1rem 0 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .about__facts div {
+    display: grid;
+    gap: 0.25rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about__facts dt {
+    color: var(--text-subtle);
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .about__facts dd {
+    margin: 0;
+    color: var(--midnight);
+    font-weight: 500;
+  }
+
+  @media (min-width: 48rem) {
+    .about__facts div {
+      grid-template-columns: 9rem 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .about {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

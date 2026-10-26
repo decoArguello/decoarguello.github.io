@@ -1,0 +1,165 @@
+---
+/**
+ * Ilustración del hero: un mapa de sistema con un nodo origen (el "punto cero")
+ * conectado a las cuatro áreas de práctica. Decorativa: las especialidades
+ * también se listan en texto.
+ */
+const nodes = [
+  { x: 24, y: 64, label: 'Arquitectura', path: 'M240 206 V90 H184' },
+  { x: 296, y: 64, label: 'IA · Agentes', path: 'M240 206 V90 H296' },
+  { x: 24, y: 364, label: 'Datos', path: 'M240 274 V390 H184' },
+  { x: 296, y: 364, label: 'Cloud · DevOps', path: 'M240 274 V390 H296' },
+];
+---
+
+<div class="hero-visual" aria-hidden="true">
+  <svg viewBox="0 0 480 480" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="hero-dots" width="24" height="24" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1.1" fill="#C5D0DB"></circle>
+      </pattern>
+    </defs>
+
+    <rect width="480" height="480" fill="url(#hero-dots)"></rect>
+
+    <!-- Ramas secundarias -->
+    <g class="faint">
+      <path d="M206 240 H96"></path>
+      <path d="M274 240 H384"></path>
+      <circle cx="96" cy="240" r="4"></circle>
+      <circle cx="384" cy="240" r="4"></circle>
+    </g>
+
+    <!-- Conexiones principales -->
+    {
+      nodes.map((node, i) => (
+        <g>
+          <path class="wire" d={node.path} />
+          <path class="flow" d={node.path} style={`animation-delay: ${i * -0.9}s`} />
+        </g>
+      ))
+    }
+
+    <!-- Nodos de área -->
+    {
+      nodes.map((node) => (
+        <g class="node">
+          <rect x={node.x} y={node.y} width="160" height="52" rx="14" />
+          <circle cx={node.x + 22} cy={node.y + 26} r="4" class="node__dot" />
+          <text x={node.x + 36} y={node.y + 31}>
+            {node.label}
+          </text>
+        </g>
+      ))
+    }
+
+    <!-- Origen: el "cero" con su bit -->
+    <circle class="pulse" cx="240" cy="240" r="40"></circle>
+    <circle cx="240" cy="240" r="40" fill="#101827"></circle>
+    <circle cx="234" cy="240" r="13" fill="none" stroke="#fff" stroke-width="4"></circle>
+    <circle cx="252" cy="253" r="6" fill="#7EE7CB"></circle>
+  </svg>
+</div>
+
+<style>
+  .hero-visual {
+    position: relative;
+    aspect-ratio: 1;
+    width: 100%;
+    max-width: 30rem;
+    margin-inline: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--white), var(--paper));
+    overflow: hidden;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .faint path {
+    fill: none;
+    stroke: var(--cloud-strong);
+    stroke-width: 1.5;
+    stroke-dasharray: 2 6;
+  }
+
+  .faint circle {
+    fill: var(--white);
+    stroke: var(--cloud-strong);
+    stroke-width: 1.5;
+  }
+
+  .wire,
+  .flow {
+    fill: none;
+    stroke-width: 1.75;
+    stroke-linejoin: round;
+  }
+
+  .wire {
+    stroke: var(--cloud-strong);
+  }
+
+  .flow {
+    stroke: var(--electric);
+    stroke-dasharray: 10 190;
+    stroke-linecap: round;
+    animation: flow 3.6s linear infinite;
+  }
+
+  .node rect {
+    fill: var(--white);
+    stroke: var(--cloud-strong);
+    stroke-width: 1.25;
+  }
+
+  .node__dot {
+    fill: var(--mint);
+  }
+
+  .node text {
+    fill: var(--midnight);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .pulse {
+    fill: var(--mint);
+    opacity: 0;
+    transform-origin: 240px 240px;
+    animation: pulse 3.2s var(--ease) infinite;
+  }
+
+  @keyframes flow {
+    from {
+      stroke-dashoffset: 200;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.9);
+    }
+  }
+
+  /* Sin movimiento: se ocultan los elementos animados en lugar de congelarlos a mitad. */
+  @media (prefers-reduced-motion: reduce) {
+    .flow,
+    .pulse {
+      display: none;
+    }
+  }
+</style>
