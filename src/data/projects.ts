@@ -42,20 +42,6 @@ export const projects: Project[] = [
     links: { repository: null, demo: null },
   },
   {
-    slug: 'podalia',
-    name: 'Podalia',
-    category: 'Salud',
-    summary: 'Sistema de gestión clínica y consulta externa.',
-    problem:
-      'La consulta externa requiere coordinar agenda, historia clínica y seguimiento de pacientes con rigor y confidencialidad.',
-    solution:
-      'Un sistema de gestión clínica que centraliza la operación de la consulta, con especial atención a la integridad y protección de los datos.',
-    stack: [],
-    visual: 'pulse',
-    status: 'draft',
-    links: { repository: null, demo: null },
-  },
-  {
     slug: 'agentos',
     name: 'AgentOS',
     category: 'Inteligencia artificial',
